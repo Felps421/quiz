@@ -1,992 +1,984 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Corex Fitness — Coach Pessoal com IA</title>
-  <meta name="description" content="Descubra seu plano ideal em 30 segundos. Bulking, cutting ou manutenção — a IA calcula suas calorias e macros automaticamente. Grátis." />
-  <meta name="author" content="Corex Fitness" />
-  <meta name="keywords" content="fitness, bulking, cutting, calorias, plano alimentar, coach IA, emagrecimento, ganho de massa" />
-  <link rel="canonical" href="https://cocky-corex-fit.base44.app" />
-  <!-- Open Graph -->
-  <meta property="og:title" content="Corex Fitness — Coach Pessoal com IA" />
-  <meta property="og:description" content="Descubra seu plano ideal em 30 segundos. Bulking, cutting ou manutenção — cálculo automático de calorias e macros." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://cocky-corex-fit.base44.app" />
-  <meta property="og:locale" content="pt_BR" />
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Corex Fitness — Coach Pessoal com IA" />
-  <meta name="twitter:description" content="Descubra seu plano ideal em 30 segundos. Bulking, cutting ou manutenção." />
-  <!-- JSON-LD -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Corex Fitness",
-    "description": "Coach de fitness pessoal com IA. Calcule suas calorias e macros para bulking, cutting ou manutenção de peso.",
-    "applicationCategory": "HealthApplication",
-    "operatingSystem": "Web",
-    "url": "https://cocky-corex-fit.base44.app",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL" }
-  }
-  </script>
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CoreXFit AI - Quiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
   <style>
-    /* ===== RESET & BASE ===== */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg-base:        hsl(222, 25%, 4%);
-      --bg-section:     hsl(222, 22%, 6%);
-      --bg-card:        hsl(222, 20%, 8%);
-      --border:         hsl(222, 20%, 14%);
-      --foreground:     hsl(210, 40%, 96%);
-      --muted:          hsl(215, 16%, 55%);
-      --neon-cyan:      hsl(185, 100%, 50%);
-      --neon-orange:    hsl(38, 100%, 55%);
-      --neon-cyan-dim:  hsl(185, 100%, 50%, 0.1);
-      --neon-cyan-border: hsl(185, 100%, 50%, 0.3);
-      --gradient-hero:  linear-gradient(160deg, hsl(222,25%,4%) 0%, hsl(222,22%,6%) 50%, hsl(222,20%,5%) 100%);
-      --font-display:   'Space Grotesk', sans-serif;
-      --font-body:      'Inter', sans-serif;
-      --radius:         12px;
+    /* ========== RESET & BASE ========== */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg: #0f1318;
+      --card: #161b22;
+      --border: #252d38;
+      --fg: #f0f0f0;
+      --fg-muted: #7a8494;
+      --primary: #34d67b;
+      --primary-dark: #1a2e23;
+      --primary-fg: #0a0f0d;
+    }
+
     body {
-      font-family: var(--font-body);
-      background: var(--bg-base);
-      color: var(--foreground);
-      line-height: 1.6;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      min-height: 100vh;
       overflow-x: hidden;
     }
-    /* ===== GRID BACKGROUND ===== */
-    .hero-grid {
-      background-image:
-        linear-gradient(hsl(185,100%,50%,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, hsl(185,100%,50%,0.03) 1px, transparent 1px);
-      background-size: 40px 40px;
+
+    h1,
+    h2,
+    h3 {
+      font-family: 'Space Grotesk', sans-serif;
     }
-    /* ===== NAVBAR ===== */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 50;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 32px;
-      background: hsl(222,25%,4%,0.85);
-      -webkit-backdrop-filter: blur(12px);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo { height: 40px; width: auto; filter:  brightness(0.85); }
-    .btn-outline {
-      font-family: var(--font-display);
-      font-size: 0.875rem;
-      font-weight: 600;
-      padding: 8px 18px;
-      border-radius: 8px;
-      border: 1px solid var(--neon-cyan-border);
-      color: var(--neon-cyan);
-      background: var(--neon-cyan-dim);
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.2s ease;
-    }
-    .btn-outline:hover {
-      background: hsl(185,100%,50%,0.18);
-      border-color: var(--neon-cyan);
-      box-shadow: 0 0 16px hsl(185,100%,50%,0.2);
-    }
-    /* ===== HERO ===== */
-    #hero {
+
+    /* ========== LAYOUT ========== */
+    .quiz-container {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 20px;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .step {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .step.active {
+      display: flex;
+      animation: fadeSlideIn 0.45s ease-out;
+    }
+
+    /* ========== PROGRESS BAR ========== */
+    .progress-wrap {
+      padding: 16px 0 8px;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .progress-info span:first-child {
+      color: var(--fg-muted);
+    }
+
+    .progress-info span:last-child {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .progress-track {
+      height: 6px;
+      background: var(--card);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--primary);
+      border-radius: 99px;
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 0%;
+    }
+
+    /* ========== INTRO ========== */
+    .intro-center {
+      flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 100px 24px 80px;
-      position: relative;
-      overflow: hidden;
-      background: var(--gradient-hero);
+      padding: 40px 0;
     }
-    .glow-1 {
-      position: absolute;
-      top: 25%; left: 50%; transform: translateX(-50%);
-      width: 600px; height: 300px; border-radius: 50%;
-      background: hsl(185,100%,50%,0.06);
-      filter: blur(80px);
-      pointer-events: none;
-    }
-    .glow-2 {
-      position: absolute;
-      top: 50%; left: 25%;
-      width: 300px; height: 300px; border-radius: 50%;
-      background: hsl(38,100%,55%,0.04);
-      filter: blur(60px);
-      pointer-events: none;
-    }
-    .hero-content { position: relative; z-index: 10; max-width: 760px; }
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border-radius: 999px;
-      padding: 6px 16px;
-      margin-bottom: 32px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      font-family: var(--font-display);
-      background: hsl(185,100%,50%,0.1);
-      border: 1px solid hsl(185,100%,50%,0.3);
-      color: var(--neon-cyan);
-    }
-    .badge svg { width: 16px; height: 16px; }
-    h1 {
-      font-family: var(--font-display);
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      font-weight: 700;
-      line-height: 1.15;
-      margin-bottom: 24px;
-      animation: fadeUp 0.6s ease both;
-    }
-    .text-neon { color: var(--neon-cyan); }
-    .text-orange { color: var(--neon-orange); }
-    .hero-sub {
-      font-size: clamp(1rem, 2.5vw, 1.25rem);
-      color: var(--muted);
-      max-width: 520px;
-      margin: 0 auto 40px;
-      animation: fadeUp 0.6s 0.1s ease both;
-    }
-    .stats {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      margin-bottom: 40px;
-      animation: fadeUp 0.6s 0.2s ease both;
-      flex-wrap: wrap;
-    }
-    .stat-value {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--neon-cyan);
-    }
-    .stat-label { font-size: 0.75rem; color: var(--muted); }
-    .btn-primary {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      font-weight: 700;
-      padding: 14px 32px;
-      border-radius: 10px;
-      border: none;
-      background: linear-gradient(135deg, hsl(185,100%,42%), hsl(185,100%,32%));
-      color: hsl(222,25%,4%);
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      animation: fadeUp 0.6s 0.3s ease both, glowPulse 2.5s ease-in-out infinite;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 32px hsl(185,100%,50%,0.4); }
-    .hero-note { font-size: 0.85rem; color: var(--muted); margin-top: 16px; }
-    .scroll-indicator {
-      position: absolute;
-      bottom: 32px; left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 8px;
-      color: var(--muted);
-    }
-    .scroll-indicator span { font-size: 0.75rem; font-family: var(--font-display); }
-    .scroll-line {
-      width: 1px; height: 32px; border-radius: 999px;
-      background: linear-gradient(to bottom, var(--muted), transparent);
-    }
-    /* ===== QUIZ SECTION ===== */
-    #quiz-section {
-      padding: 80px 24px;
-      background: var(--bg-section);
-      position: relative;
-    }
-    #quiz-section .section-grid {
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(hsl(185,100%,50%,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, hsl(185,100%,50%,0.02) 1px, transparent 1px);
-      background-size: 40px 40px;
-      pointer-events: none;
-    }
-    .quiz-wrapper {
-      position: relative; z-index: 10;
-      max-width: 560px; margin: 0 auto;
-    }
-    .section-label {
-      font-family: var(--font-display);
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      color: var(--neon-cyan);
-      text-transform: uppercase;
-      display: block;
-      margin-bottom: 8px;
-    }
-    .section-title {
-      font-family: var(--font-display);
-      font-size: clamp(1.75rem, 4vw, 2.5rem);
-      font-weight: 700;
-      color: var(--foreground);
-    }
-    .section-sub { color: var(--muted); margin-top: 12px; }
-    .section-header { text-align: center; margin-bottom: 48px; }
-    /* Quiz Card */
-    .quiz-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 32px;
-      box-shadow: 0 0 40px hsl(185,100%,50%,0.04);
-    }
-    /* Progress bar */
-    .progress-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-    .progress-label { font-size: 0.75rem; font-family: var(--font-display); color: var(--muted); }
-    .progress-bar-bg {
-      height: 4px;
-      border-radius: 999px;
-      background: hsl(222,20%,14%);
-      margin-bottom: 32px;
-      overflow: hidden;
-    }
-    .progress-bar-fill {
-      height: 100%;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--neon-cyan), hsl(185,100%,40%));
-      transition: width 0.4s cubic-bezier(.4,0,.2,1);
-    }
-    /* Step */
-    .quiz-step { display: none; animation: fadeUp 0.35s ease; }
-    .quiz-step.active { display: block; }
-    .step-title {
-      font-family: var(--font-display);
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--foreground);
+
+    .logo {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: contain;
+      background: var(--card);
+      padding: 8px;
       margin-bottom: 24px;
     }
-    /* Option buttons */
-    .options { display: flex; flex-direction: column; gap: 12px; }
-    .opt-btn {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 16px 20px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: hsl(222,20%,10%);
-      color: var(--foreground);
-      font-family: var(--font-body);
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-align: left;
-      width: 100%;
-    }
-    .opt-btn:hover, .opt-btn.selected {
-      border-color: var(--neon-cyan);
-      background: hsl(185,100%,50%,0.08);
-      color: var(--neon-cyan);
-      box-shadow: 0 0 0 1px hsl(185,100%,50%,0.2);
-    }
-    .opt-emoji { font-size: 1.4rem; }
-    .opt-text {}
-    .opt-text strong { display: block; font-weight: 600; }
-    .opt-text small { color: var(--muted); font-size: 0.8rem; }
-    .opt-btn.selected .opt-text small { color: hsl(185,100%,50%,0.7); }
-    /* Input fields */
-    .input-group { margin-bottom: 8px; }
-    .input-label {
-      display: block;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--muted);
-      margin-bottom: 8px;
-      font-family: var(--font-display);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-    .quiz-input {
-      width: 100%;
-      padding: 14px 16px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: hsl(222,20%,10%);
-      color: var(--foreground);
-      font-size: 1rem;
-      font-family: var(--font-body);
-      outline: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-    .quiz-input:focus {
-      border-color: var(--neon-cyan);
-      box-shadow: 0 0 0 2px hsl(185,100%,50%,0.15);
-    }
-    .quiz-input::placeholder { color: hsl(215,16%,40%); }
-    .input-hint { font-size: 0.75rem; color: var(--muted); margin-top: 6px; }
-    .input-error { font-size: 0.75rem; color: hsl(0,80%,60%); margin-top: 6px; display: none; }
-    /* Nav buttons */
-    .quiz-nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 28px;
-      gap: 12px;
-    }
-    .btn-back {
-      font-family: var(--font-display);
-      font-size: 0.9rem;
-      font-weight: 600;
-      padding: 10px 20px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--muted);
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .btn-back:hover { color: var(--foreground); border-color: hsl(215,16%,35%); }
-    .btn-back:disabled { opacity: 0.3; cursor: not-allowed; }
-    .btn-next {
-      font-family: var(--font-display);
-      font-size: 0.95rem;
-      font-weight: 700;
-      padding: 12px 28px;
-      border-radius: 8px;
-      border: none;
-      background: linear-gradient(135deg, hsl(185,100%,42%), hsl(185,100%,32%));
-      color: hsl(222,25%,4%);
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-left: auto;
-    }
-    .btn-next:hover { box-shadow: 0 0 20px hsl(185,100%,50%,0.35); transform: translateY(-1px); }
-    /* Result */
-    #result { display: none; }
-    #result.active { display: block; animation: fadeUp 0.5s ease; }
-    .result-goal-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border-radius: 999px;
-      padding: 6px 18px;
-      margin-bottom: 20px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      font-family: var(--font-display);
-    }
-    .result-calories {
-      text-align: center;
-      margin-bottom: 24px;
-    }
-    .cal-number {
-      font-family: var(--font-display);
-      font-size: 3.5rem;
-      font-weight: 700;
-      color: var(--neon-cyan);
-      line-height: 1;
-    }
-    .cal-label { font-size: 0.85rem; color: var(--muted); margin-top: 4px; }
-    .macros-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-bottom: 24px;
-    }
-    .macro-card {
-      text-align: center;
-      padding: 14px 8px;
-      border-radius: 10px;
-      background: hsl(222,20%,10%);
-      border: 1px solid var(--border);
-    }
-    .macro-value {
-      font-family: var(--font-display);
-      font-size: 1.25rem;
-      font-weight: 700;
-    }
-    .macro-label { font-size: 0.7rem; color: var(--muted); margin-top: 2px; }
-    .result-message {
-      padding: 16px 20px;
-      border-radius: 10px;
-      background: hsl(222,20%,10%);
-      border-left: 3px solid var(--neon-cyan);
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin-bottom: 24px;
-      line-height: 1.6;
-    }
-    .btn-app {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      width: 100%;
-      padding: 16px;
-      border-radius: 10px;
-      border: none;
-      background: linear-gradient(135deg, hsl(38,100%,55%), hsl(38,100%,42%));
-      color: hsl(222,25%,4%);
-      font-family: var(--font-display);
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.2s ease;
+
+    .intro-center h1 {
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      line-height: 1.2;
       margin-bottom: 12px;
     }
-    .btn-app:hover { box-shadow: 0 0 24px hsl(38,100%,55%,0.4); transform: translateY(-1px); }
-    .btn-restart {
-      display: block;
-      width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--muted);
-      font-family: var(--font-display);
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-align: center;
+
+    .intro-center h1 span {
+      color: var(--primary);
     }
-    .btn-restart:hover { color: var(--foreground); border-color: hsl(215,16%,35%); }
-    /* ===== FEATURES SECTION ===== */
-    #features {
-      padding: 96px 24px;
-      background: var(--gradient-hero);
-    }
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
-      max-width: 1000px;
-      margin: 0 auto 64px;
-    }
-    .feature-card {
-      padding: 28px;
-      border-radius: var(--radius);
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-    }
-    .feature-card:hover {
-      border-color: hsl(185,100%,50%,0.3);
-      box-shadow: 0 0 24px hsl(185,100%,50%,0.06);
-      transform: translateY(-2px);
-    }
-    .feature-icon {
-      width: 48px; height: 48px;
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem;
-      margin-bottom: 16px;
-      background: hsl(185,100%,50%,0.1);
-      border: 1px solid hsl(185,100%,50%,0.2);
-    }
-    .feature-title {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--foreground);
-      margin-bottom: 8px;
-    }
-    .feature-desc { font-size: 0.875rem; color: var(--muted); line-height: 1.7; }
-    /* Final CTA */
-    .final-cta {
-      max-width: 1000px;
-      margin: 0 auto;
-      text-align: center;
-      border-radius: 20px;
-      padding: 64px 40px;
-      background: linear-gradient(135deg, hsl(222,20%,8%) 0%, hsl(222,22%,6%) 100%);
-      border: 1px solid hsl(185,100%,50%,0.2);
-      position: relative;
-      overflow: hidden;
-    }
-    .final-cta::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at center, hsl(185,100%,50%,0.05) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .final-cta > * { position: relative; z-index: 1; }
-    .final-cta h3 {
-      font-family: var(--font-display);
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      font-weight: 700;
-      color: var(--foreground);
-      margin-bottom: 12px;
-    }
-    .final-cta p { color: var(--muted); max-width: 420px; margin: 0 auto 32px; }
-    .btn-accent {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 32px;
-      border-radius: 10px;
-      border: none;
-      background: linear-gradient(135deg, hsl(38,100%,55%), hsl(38,100%,42%));
-      color: hsl(222,25%,4%);
-      font-family: var(--font-display);
+
+    .intro-center p {
+      color: var(--fg-muted);
       font-size: 1.05rem;
+      max-width: 380px;
+      margin-bottom: 36px;
+    }
+
+    /* ========== BUTTONS ========== */
+    .btn-primary {
+      background: var(--primary);
+      color: var(--primary-fg);
+      font-family: 'Space Grotesk', sans-serif;
       font-weight: 700;
+      font-size: 1.05rem;
+      border: none;
+      border-radius: 14px;
+      padding: 16px 40px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.3s;
+      box-shadow: 0 0 20px rgba(52, 214, 123, 0.3);
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.04);
+      box-shadow: 0 0 40px rgba(52, 214, 123, 0.45);
+    }
+
+    .btn-nav {
+      padding: 14px 28px;
+      border-radius: 14px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .btn-back {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--fg-muted);
+    }
+
+    .btn-back:hover {
+      color: var(--fg);
+      border-color: var(--primary);
+    }
+
+    .btn-next {
+      background: var(--primary);
+      color: var(--primary-fg);
+      flex: 1;
+    }
+
+    .btn-next:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 20px rgba(52, 214, 123, 0.3);
+    }
+
+    .btn-next:disabled {
+      background: var(--card);
+      color: var(--fg-muted);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .nav-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    /* ========== OPTION CARDS ========== */
+    .question-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      padding-top: 24px;
+    }
+
+    .option-btn {
+      width: 100%;
+      text-align: left;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--fg);
+      padding: 16px 20px;
+      border-radius: 14px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 10px;
+      position: relative;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .option-btn:hover {
+      border-color: rgba(52, 214, 123, 0.4);
+      background: var(--primary-dark);
+    }
+
+    .option-btn.selected {
+      border-color: var(--primary);
+      background: var(--primary-dark);
+      box-shadow: 0 0 16px rgba(52, 214, 123, 0.2);
+    }
+
+    .badge-rec {
+      position: absolute;
+      top: -9px;
+      right: 12px;
+      background: var(--primary);
+      color: var(--primary-fg);
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 99px;
+      font-weight: 600;
+    }
+
+    /* ========== CHECKBOX OPTION ========== */
+    .check-btn {
+      width: 100%;
+      text-align: left;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--fg);
+      padding: 14px 20px;
+      border-radius: 14px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .check-btn:hover {
+      border-color: rgba(52, 214, 123, 0.4);
+    }
+
+    .check-btn.checked {
+      border-color: var(--primary);
+      background: var(--primary-dark);
+    }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--fg-muted);
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+      font-size: 12px;
+      color: var(--primary-fg);
+    }
+
+    .check-btn.checked .check-box {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    /* ========== INPUT FIELDS ========== */
+    .input-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .field-input {
+      flex: 1;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 18px;
+      color: var(--fg);
+      font-size: 1.05rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .field-input:focus {
+      border-color: var(--primary);
+    }
+
+    .unit-toggle {
+      display: flex;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .unit-btn {
+      padding: 14px 18px;
+      background: var(--card);
+      color: var(--fg-muted);
+      border: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .unit-btn.active {
+      background: var(--primary);
+      color: var(--primary-fg);
+    }
+
+    textarea.field-input {
+      resize: none;
+      min-height: 110px;
+    }
+
+    /* ========== SECURITY SCREEN ========== */
+    .security-center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .spinner {
+      width: 56px;
+      height: 56px;
+      border: 4px solid var(--card);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 1.2s linear infinite;
+      margin-bottom: 28px;
+    }
+
+    .sec-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 20px;
+      margin-bottom: 10px;
+      width: 100%;
+      max-width: 340px;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: all 0.5s ease-out;
+      font-size: 0.9rem;
+    }
+
+    .sec-item.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ========== RESULT SCREEN ========== */
+    .result-header {
+      text-align: center;
+      padding-top: 20px;
+    }
+
+    .result-header .logo-sm {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      object-fit: contain;
+      background: var(--card);
+      padding: 6px;
+      margin: 0 auto 12px;
+      display: block;
+    }
+
+    .result-header h2 {
+      font-size: 1.6rem;
+    }
+
+    .result-header p {
+      color: var(--fg-muted);
+      margin-top: 4px;
+    }
+
+    .macro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .macro-card {
+      background: rgba(22, 27, 34, 0.8);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      text-align: center;
+      animation: scaleIn 0.35s ease-out both;
+    }
+
+    .macro-card:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+
+    .macro-card:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+
+    .macro-card:nth-child(4) {
+      animation-delay: 0.3s;
+    }
+
+    .macro-label {
+      font-size: 11px;
+      color: var(--fg-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .macro-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .chart-card {
+      background: rgba(22, 27, 34, 0.8);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      margin-top: 24px;
+      text-align: center;
+    }
+
+    .chart-card h3 {
+      font-size: 1rem;
+      margin-bottom: 16px;
+    }
+
+    .chart-card canvas {
+      display: block;
+      margin: 0 auto;
+    }
+
+    .persuasive {
+      text-align: center;
+      margin-top: 24px;
+      padding: 0 8px;
+    }
+
+    .persuasive p:first-child {
+      font-size: 1.05rem;
+      font-weight: 500;
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+
+    .persuasive p:last-child {
+      color: var(--fg-muted);
+      font-size: 0.9rem;
+    }
+
+    .cta-wrap {
+      margin-top: 28px;
+      padding-bottom: 32px;
+    }
+
+    .btn-cta {
+      display: block;
+      width: 100%;
+      background: var(--primary);
+      color: var(--primary-fg);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 14px;
+      padding: 20px;
       cursor: pointer;
       text-decoration: none;
-      transition: all 0.2s ease;
-    }
-    .btn-accent:hover { box-shadow: 0 0 28px hsl(38,100%,55%,0.4); transform: translateY(-2px); }
-    /* ===== FOOTER ===== */
-    footer {
-      padding: 32px 24px;
       text-align: center;
-      background: var(--bg-base);
-      border-top: 1px solid var(--border);
+      transition: transform 0.2s, box-shadow 0.3s;
+      box-shadow: 0 0 30px rgba(52, 214, 123, 0.35);
+      animation: pulseGlow 2s ease-in-out infinite;
     }
-    .footer-logo { height: 32px; width: auto; filter: invert(1) brightness(0.7); margin-bottom: 12px; }
-    .footer-text { font-size: 0.875rem; color: var(--muted); }
-    /* ===== ANIMATIONS ===== */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
+
+    .btn-cta:hover {
+      transform: scale(1.04);
+      box-shadow: 0 0 50px rgba(52, 214, 123, 0.5);
     }
-    @keyframes glowPulse {
-      0%, 100% { box-shadow: 0 0 12px hsl(185,100%,50%,0.3); }
-      50%       { box-shadow: 0 0 28px hsl(185,100%,50%,0.6); }
+
+    /* ========== ANIMATIONS ========== */
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
-    /* Observe animation */
-    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 600px) {
-      nav { padding: 14px 20px; }
-      .stats { gap: 24px; }
-      .quiz-card { padding: 22px 18px; }
-      .macros-grid { gap: 8px; }
-      .final-cta { padding: 40px 24px; }
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes pulseGlow {
+
+      0%,
+      100% {
+        box-shadow: 0 0 24px rgba(52, 214, 123, 0.3);
+      }
+
+      50% {
+        box-shadow: 0 0 44px rgba(52, 214, 123, 0.5);
+      }
     }
   </style>
 </head>
+
 <body>
-  <!-- NAVBAR -->
-  <nav>
-    <img src="Fitness Logo.png" alt="Corex Fitness" class="nav-logo" onerror="this.style.display='none'" />
-    <a href="https://cocky-corex-fit.base44.app" target="_blank" rel="noopener noreferrer" class="btn-outline">Abrir App</a>
-  </nav>
-  <!-- HERO -->
-  <section id="hero" class="hero-grid">
-    <div class="glow-1"></div>
-    <div class="glow-2"></div>
-    <div class="hero-content">
-      <div class="badge">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5a9 9 0 0 1 11 0"/><path d="m15 10-3 3-3-3"/><path d="M18 15.5a9 9 0 0 1-12 0"/></svg>
-        Coach Fitness Personal com IA
+  <div class="quiz-container">
+    <!-- PROGRESS BAR (hidden on intro/security/result) -->
+    <div class="progress-wrap" id="progressWrap" style="display:none;">
+      <div class="progress-info">
+        <span id="progressLabel">Pergunta 1 de 7</span>
+        <span id="progressPct">0%</span>
       </div>
-      <h1>
-        Descubra seu <span class="text-neon">plano ideal</span> em 30 segundos
-      </h1>
-      <p class="hero-sub">
-        Personalização automática baseada no seu corpo. Bulking, cutting ou manutenção — a IA cuida de tudo.
-      </p>
-      <div class="stats">
-        <div>
-          <div class="stat-value">10k+</div>
-          <div class="stat-label">Usuários Ativos</div>
-        </div>
-        <div>
-          <div class="stat-value">95%</div>
-          <div class="stat-label">Taxa de Satisfação</div>
-        </div>
-        <div>
-          <div class="stat-value">30s</div>
-          <div class="stat-label">Para Começar</div>
-        </div>
-      </div>
-      <button class="btn-primary" onclick="scrollToQuiz()">
-        Começar Quiz
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-      </button>
-      <p class="hero-note">Gratuito · Sem cadastro · Resultado imediato</p>
-    </div>
-    <div class="scroll-indicator">
-      <span>Role para baixo</span>
-      <div class="scroll-line"></div>
-    </div>
-  </section>
-  <!-- QUIZ SECTION -->
-  <section id="quiz-section">
-    <div class="section-grid"></div>
-    <div class="quiz-wrapper">
-      <div class="section-header">
-        <span class="section-label">Quiz Personalizado</span>
-        <h2 class="section-title">Monte seu plano agora</h2>
-        <p class="section-sub">4 perguntas. Resultado instantâneo. 100% personalizado.</p>
-      </div>
-      <div class="quiz-card">
-        <!-- Progress -->
-        <div class="progress-header">
-          <span class="progress-label" id="progress-text">Passo 1 de 4</span>
-          <span class="progress-label" id="progress-pct">25%</span>
-        </div>
-        <div class="progress-bar-bg">
-          <div class="progress-bar-fill" id="progress-fill" style="width: 25%"></div>
-        </div>
-        <!-- Steps container -->
-        <div id="quiz-steps">
-          <!-- Step 1: Objetivo -->
-          <div class="quiz-step active" data-step="1">
-            <p class="step-title">🎯 Qual é o seu objetivo principal?</p>
-            <div class="options">
-              <button class="opt-btn" data-value="bulk" onclick="selectOption(this, 'goal', 'bulk')">
-                <span class="opt-emoji">💪</span>
-                <span class="opt-text">
-                  <strong>Ganhar Massa</strong>
-                  <small>Aumentar músculo e força (Bulking)</small>
-                </span>
-              </button>
-              <button class="opt-btn" data-value="cut" onclick="selectOption(this, 'goal', 'cut')">
-                <span class="opt-emoji">🔥</span>
-                <span class="opt-text">
-                  <strong>Perder Gordura</strong>
-                  <small>Reduzir % de gordura mantendo músculo (Cutting)</small>
-                </span>
-              </button>
-              <button class="opt-btn" data-value="maintain" onclick="selectOption(this, 'goal', 'maintain')">
-                <span class="opt-emoji">⚖️</span>
-                <span class="opt-text">
-                  <strong>Manter Peso</strong>
-                  <small>Estabilizar e melhorar composição corporal</small>
-                </span>
-              </button>
-            </div>
-            <div class="quiz-nav">
-              <button class="btn-back" disabled>Voltar</button>
-              <button class="btn-next" onclick="nextStep(1)">
-                Próximo
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-              </button>
-            </div>
-          </div>
-          <!-- Step 2: Peso -->
-          <div class="quiz-step" data-step="2">
-            <p class="step-title">⚖️ Qual é o seu peso atual?</p>
-            <div class="input-group">
-              <label class="input-label" for="weight-input">Peso em quilogramas</label>
-              <input type="number" id="weight-input" class="quiz-input" placeholder="Ex: 75" min="30" max="300" oninput="answers.weight = this.value" />
-              <p class="input-hint">Digite um valor entre 30 e 300 kg</p>
-              <p class="input-error" id="weight-error">Por favor, insira um peso válido (30–300 kg).</p>
-            </div>
-            <div class="quiz-nav">
-              <button class="btn-back" onclick="prevStep(2)">Voltar</button>
-              <button class="btn-next" onclick="nextStep(2)">
-                Próximo
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-              </button>
-            </div>
-          </div>
-          <!-- Step 3: Altura -->
-          <div class="quiz-step" data-step="3">
-            <p class="step-title">📏 Qual é a sua altura?</p>
-            <div class="input-group">
-              <label class="input-label" for="height-input">Altura em centímetros</label>
-              <input type="number" id="height-input" class="quiz-input" placeholder="Ex: 175" min="130" max="250" oninput="answers.height = this.value" />
-              <p class="input-hint">Digite um valor entre 130 e 250 cm</p>
-              <p class="input-error" id="height-error">Por favor, insira uma altura válida (130–250 cm).</p>
-            </div>
-            <div class="quiz-nav">
-              <button class="btn-back" onclick="prevStep(3)">Voltar</button>
-              <button class="btn-next" onclick="nextStep(3)">
-                Próximo
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-              </button>
-            </div>
-          </div>
-          <!-- Step 4: Treino -->
-          <div class="quiz-step" data-step="4">
-            <p class="step-title">🏋️ Quantos dias por semana você treina?</p>
-            <div class="options">
-              <button class="opt-btn" onclick="selectOption(this, 'days', '1-2')">
-                <span class="opt-emoji">🌱</span>
-                <span class="opt-text">
-                  <strong>1–2 dias</strong>
-                  <small>Iniciante / Sedentário</small>
-                </span>
-              </button>
-              <button class="opt-btn" onclick="selectOption(this, 'days', '3-4')">
-                <span class="opt-emoji">💪</span>
-                <span class="opt-text">
-                  <strong>3–4 dias</strong>
-                  <small>Intermediário / Ativo</small>
-                </span>
-              </button>
-              <button class="opt-btn" onclick="selectOption(this, 'days', '5-6')">
-                <span class="opt-emoji">🔥</span>
-                <span class="opt-text">
-                  <strong>5–6 dias</strong>
-                  <small>Avançado / Muito Ativo</small>
-                </span>
-              </button>
-              <button class="opt-btn" onclick="selectOption(this, 'days', '7')">
-                <span class="opt-emoji">⚡</span>
-                <span class="opt-text">
-                  <strong>Todos os dias</strong>
-                  <small>Atleta / Extremamente Ativo</small>
-                </span>
-              </button>
-            </div>
-            <div class="quiz-nav">
-              <button class="btn-back" onclick="prevStep(4)">Voltar</button>
-              <button class="btn-next" onclick="nextStep(4)">
-                Ver Resultado
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-        <!-- Result -->
-        <div id="result">
-          <div style="text-align:center; margin-bottom: 20px;">
-            <div class="result-goal-badge" id="result-badge"></div>
-          </div>
-          <div class="result-calories">
-            <div class="cal-number" id="result-calories">—</div>
-            <div class="cal-label">kcal / dia recomendadas</div>
-          </div>
-          <div class="macros-grid">
-            <div class="macro-card">
-              <div class="macro-value" id="macro-protein" style="color: var(--neon-cyan);">—</div>
-              <div class="macro-label">Proteína (g)</div>
-            </div>
-            <div class="macro-card">
-              <div class="macro-value" id="macro-carb" style="color: var(--neon-orange);">—</div>
-              <div class="macro-label">Carboidrato (g)</div>
-            </div>
-            <div class="macro-card">
-              <div class="macro-value" id="macro-fat" style="color: hsl(280,80%,65%);">—</div>
-              <div class="macro-label">Gordura (g)</div>
-            </div>
-          </div>
-          <div class="result-message" id="result-message"></div>
-          <a href="https://cocky-corex-fit.base44.app" target="_blank" rel="noopener noreferrer" class="btn-app">
-            Acompanhar meu progresso no App
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </a>
-          <button class="btn-restart" onclick="restartQuiz()">↩ Refazer Quiz</button>
-        </div>
-      </div><!-- /quiz-card -->
-    </div>
-  </section>
-  <!-- FEATURES -->
-  <section id="features">
-    <div style="max-width:1000px; margin:0 auto;">
-      <div class="section-header reveal">
-        <span class="section-label">Por que Corex Fitness</span>
-        <h2 class="section-title">Tudo que você precisa, <span class="text-neon">num só lugar</span></h2>
-      </div>
-      <div class="features-grid">
-        <div class="feature-card reveal">
-          <div class="feature-icon">⚡</div>
-          <h3 class="feature-title">Cálculo Automático</h3>
-          <p class="feature-desc">IA calcula suas calorias e macros ideais com base no seu perfil único, objetivo e nível de atividade.</p>
-        </div>
-        <div class="feature-card reveal">
-          <div class="feature-icon">📊</div>
-          <h3 class="feature-title">Controle de Progresso</h3>
-          <p class="feature-desc">Acompanhe cada evolução com gráficos inteligentes, histórico completo e insights semanais.</p>
-        </div>
-        <div class="feature-card reveal">
-          <div class="feature-icon">🧠</div>
-          <h3 class="feature-title">Interface Inteligente</h3>
-          <p class="feature-desc">Plano que se adapta a você. Ajustes automáticos conforme seu progresso e feedbacks em tempo real.</p>
-        </div>
-      </div>
-      <!-- Final CTA -->
-      <div class="final-cta reveal">
-        <div style="font-size:2.5rem; margin-bottom:16px;">🚀</div>
-        <h3>Pronto para transformar seu corpo?</h3>
-        <p>Acesse o app completo e tenha seu coach de IA 24/7 ao seu lado.</p>
-        <a href="https://cocky-corex-fit.base44.app" target="_blank" rel="noopener noreferrer" class="btn-accent">
-          Acessar o App Completo
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </a>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
       </div>
     </div>
-  </section>
-  <!-- FOOTER -->
-  <footer>
-    <img src="logo.png" alt="Corex Fitness" class="footer-logo" onerror="this.style.display='none'" />
-    <p class="footer-text">© 2025 Corex Fitness · Coach Pessoal com IA</p>
-  </footer>
-  <!-- ===== JAVASCRIPT ===== -->
+    <!-- ========== STEP 0: INTRO ========== -->
+    <div class="step active" id="step0">
+      <div class="intro-center">
+        <img src="Fitness Logo (1).png" alt="Logo" class="logo">
+          
+        <h1>Descubra seu plano ideal<br><span>em menos de 2 minutos</span></h1>
+        <p>Responda algumas perguntas e veja seu plano personalizado.</p>
+        <button class="btn-primary" onclick="goTo(1)">Começar</button>
+      </div>
+    </div>
+    <!-- ========== STEP 1: OBJETIVO ========== -->
+    <div class="step" id="step1">
+      <h2 class="question-title">🎯 Qual é o seu objetivo?</h2>
+      <div id="q1options">
+        <button class="option-btn" data-q="objetivo" data-v="perder">Perder peso</button>
+        <button class="option-btn" data-q="objetivo" data-v="ganhar">Ganhar massa muscular</button>
+        <button class="option-btn" data-q="objetivo" data-v="recomp">Recomposição corporal</button>
+      </div>
+      <div class="nav-row">
+        <button class="btn-nav btn-next" id="next1" disabled onclick="goTo(2)">Continuar</button>
+      </div>
+    </div>
+    <!-- ========== STEP 2: OBSTÁCULOS ========== -->
+    <div class="step" id="step2">
+      <h2 class="question-title">🚧 Quais são seus maiores obstáculos?</h2>
+      <div id="q2options">
+        <button class="check-btn" data-q="obstaculos" data-v="alimentar"><span class="check-box"></span>🍕 Falta de
+          controle alimentar</button>
+        <button class="check-btn" data-q="obstaculos" data-v="tempo"><span class="check-box"></span>⏳ Falta de
+          tempo</button>
+        <button class="check-btn" data-q="obstaculos" data-v="motivacao"><span class="check-box"></span>💤 Falta de
+          motivação</button>
+        <button class="check-btn" data-q="obstaculos" data-v="resultados"><span class="check-box"></span>📉 Não vejo
+          resultados</button>
+        <button class="check-btn" data-q="obstaculos" data-v="dieta"><span class="check-box"></span>🤯 Não sei montar
+          dieta</button>
+      </div>
+      <div class="nav-row">
+        <button class="btn-nav btn-back" onclick="goTo(1)">Voltar</button>
+        <button class="btn-nav btn-next" id="next2" disabled onclick="goTo(3)">Continuar</button>
+      </div>
+    </div>
+    <!-- ========== STEP 3: VELOCIDADE ========== -->
+    <div class="step" id="step3">
+      <h2 class="question-title">⚡ Qual velocidade você quer atingir seu objetivo?</h2>
+      <div id="q3options">
+        <button class="option-btn" data-q="velocidade" data-v="rapido">🚀 Rápido</button>
+        <button class="option-btn" data-q="velocidade" data-v="moderado" style="margin-top:14px;">⚖️ Sem muita
+          pressa<span class="badge-rec">Recomendado</span></button>
+        <button class="option-btn" data-q="velocidade" data-v="devagar">🐢 Devagar</button>
+      </div>
+      <div class="nav-row">
+        <button class="btn-nav btn-back" onclick="goTo(2)">Voltar</button>
+        <button class="btn-nav btn-next" id="next3" disabled onclick="goTo(4)">Continuar</button>
+      </div>
+    </div>
+    <!-- ========== STEP 4: ALTURA ========== -->
+    <div class="step" id="step4">
+      <h2 class="question-title">📏 Qual a sua altura?</h2>
+      <div class="input-row">
+        <input type="number" class="field-input" id="alturaInput" value="170" placeholder="170"
+          oninput="validateNumStep(4)">
+        <div class="unit-toggle">
+          <button class="unit-btn active" id="unitCm" onclick="setUnit('altura','cm')">cm</button>
+          <button class="unit-btn" id="unitFt" onclick="setUnit('altura','ft')">ft/in</button>
+        </div>
+      </div>
+      <div class="nav-row">
+        <button class="btn-nav btn-back" onclick="goTo(3)">Voltar</button>
+        <button class="btn-nav btn-next" id="next4" onclick="goTo(5)">Continuar</button>
+      </div>
+    </div>
+    <!-- ========== STEP 5: PESO ========== -->
+    <div class="step" id="step5">
+      <h2 class="question-title">⚖️ Qual o seu peso?</h2>
+      <div class="input-row">
+        <input type="number" class="field-input" id="pesoInput" value="70" placeholder="70"
+          oninput="validateNumStep(5)">
+        <div class="unit-toggle">
+          <button class="unit-btn active" id="unitKg" onclick="setUnit('peso','kg')">kg</button>
+          <button class="unit-btn" id="unitLb" onclick="setUnit('peso','lb')">lb</button>
+        </div>
+      </div>
+      <div class="nav-row">
+        <button class="btn-nav btn-back" onclick="goTo(4)">Voltar</button>
+        <button class="btn-nav btn-next" id="next5" onclick="goTo(6)">Continuar</button>
+      </div>
+    </div>
+    <!-- ========== STEP 6: META ========== -->
+    <div class="step" id="step6">
+      <h2 class="question-title">🏆 O que você gostaria de realizar?</h2>
+      <textarea class="field-input" id="metaInput"
+        placeholder="Ex: perder 10kg, ganhar definição, melhorar autoestima..." oninput="validateMeta()"></textarea>
+      <div class="nav-row">
+        <button class="btn-nav btn-back" onclick="goTo(5)">Voltar</button>
+        <button class="btn-nav btn-next" id="next6" disabled onclick="goTo(7)">Continuar</button>
+      </div>
+    </div>
+    <!-- ========== STEP 7: RESTRIÇÕES ========== -->
+    <div class="step" id="step7">
+      <h2 class="question-title">🥗 Você possui alguma restrição alimentar?</h2>
+      <div id="q7options">
+        <button class="check-btn" data-q="restricoes" data-v="diabetico"><span
+            class="check-box"></span>Diabético</button>
+        <button class="check-btn" data-q="restricoes" data-v="vegetariano"><span
+            class="check-box"></span>Vegetariano</button>
+        <button class="check-btn" data-q="restricoes" data-v="vegano"><span class="check-box"></span>Vegano</button>
+        <button class="check-btn" data-q="restricoes" data-v="lactose"><span class="check-box"></span>Intolerância à
+          lactose</button>
+        <button class="check-btn" data-q="restricoes" data-v="gluten"><span class="check-box"></span>Intolerância ao
+          glúten</button>
+        <button class="check-btn" data-q="restricoes" data-v="nenhuma"><span class="check-box"></span>Nenhuma
+          restrição</button>
+      </div>
+      <div class="nav-row">
+        <button class="btn-nav btn-back" onclick="goTo(6)">Voltar</button>
+        <button class="btn-nav btn-next" id="next7" disabled onclick="goTo(8)">Continuar</button>
+      </div>
+    </div>
+    <!-- ========== STEP 8: SEGURANÇA ========== -->
+    <div class="step" id="step8">
+      <div class="security-center">
+        <div class="spinner"></div>
+        <h2 style="margin-bottom:28px;">Analisando suas respostas...</h2>
+        <div class="sec-item" id="sec1">🔒 Suas informações estão seguras</div>
+        <div class="sec-item" id="sec2">🔐 Não compartilhamos seus dados</div>
+        <div class="sec-item" id="sec3">🛡️ Ambiente protegido</div>
+      </div>
+    </div>
+    <!-- ========== STEP 9: RESULTADO ========== -->
+    <div class="step" id="step9">
+      <div class="result-header">
+      <img src="Fitness Logo (1).png" alt="Logo" class="logo-sm">
+        <h2>🔥 Seu Plano Personalizado</h2>
+        <p>CoreXFit AI</p>
+      </div>
+      <div class="macro-grid">
+        <div class="macro-card">
+          <div class="macro-label">Calorias</div>
+          <div class="macro-value" id="resCal">0 kcal</div>
+        </div>
+        <div class="macro-card">
+          <div class="macro-label">Proteínas</div>
+          <div class="macro-value" id="resProt">0g</div>
+        </div>
+        <div class="macro-card">
+          <div class="macro-label">Carboidratos</div>
+          <div class="macro-value" id="resCarb">0g</div>
+        </div>
+        <div class="macro-card">
+          <div class="macro-label">Gorduras</div>
+          <div class="macro-value" id="resGord">0g</div>
+        </div>
+      </div>
+      <div class="chart-card">
+        <h3>📈 Evolução estimada em 12 semanas</h3>
+        <canvas id="chartCanvas" width="300" height="170"></canvas>
+      </div>
+      <div class="persuasive">
+        <p>Com base nas suas respostas, você pode alcançar esse resultado em poucos meses se seguir um plano
+          estruturado.</p>
+        <p>Você está a poucos passos de transformar seu corpo de forma inteligente e estratégica.</p>
+      </div>
+      <div class="cta-wrap">
+        <a href="https://cocky-corex-fit.base44.app/" target="_blank" rel="noopener" class="btn-cta">Quero meu plano
+          completo agora</a>
+      </div>
+    </div>
+  </div>
   <script>
-    const APP_URL = 'https://cocky-corex-fit.base44.app';
-    let currentStep = 1;
-    const totalSteps = 4;
-    const answers = { goal: null, weight: null, height: null, days: null };
-    /* ── Scroll to quiz ── */
-    function scrollToQuiz() {
-      document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth' });
-    }
-    /* ── Progress bar ── */
-    function updateProgress(step) {
-      const pct = Math.round((step / totalSteps) * 100);
-      document.getElementById('progress-fill').style.width = pct + '%';
-      document.getElementById('progress-text').textContent = `Passo ${step} de ${totalSteps}`;
-      document.getElementById('progress-pct').textContent = pct + '%';
-    }
-    /* ── Show step ── */
-    function showStep(n) {
-      document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
-      document.querySelector(`[data-step="${n}"]`).classList.add('active');
-      document.getElementById('result').classList.remove('active');
-      document.getElementById('quiz-steps').style.display = 'block';
-      updateProgress(n);
+    /* ========== STATE ========== */
+    var answers = {
+      objetivo: '', obstaculos: [], velocidade: '',
+      altura: 170, alturaUnidade: 'cm',
+      peso: 70, pesoUnidade: 'kg',
+      meta: '', restricoes: []
+    };
+    var currentStep = 0;
+    var totalSteps = 7;
+    /* ========== NAVIGATION ========== */
+    function goTo(n) {
+      // Save input values before leaving
+      if (currentStep === 4) answers.altura = Number(document.getElementById('alturaInput').value) || 0;
+      if (currentStep === 5) answers.peso = Number(document.getElementById('pesoInput').value) || 0;
+      if (currentStep === 6) answers.meta = document.getElementById('metaInput').value.trim();
+      document.getElementById('step' + currentStep).classList.remove('active');
       currentStep = n;
-    }
-    /* ── Option select ── */
-    function selectOption(btn, key, value) {
-      btn.closest('.options').querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-      answers[key] = value;
-    }
-    /* ── Validate step ── */
-    function validateStep(step) {
-      if (step === 1) {
-        if (!answers.goal) { alert('Por favor, selecione um objetivo.'); return false; }
-      }
-      if (step === 2) {
-        const w = parseFloat(answers.weight);
-        const err = document.getElementById('weight-error');
-        if (!answers.weight || isNaN(w) || w < 30 || w > 300) {
-          err.style.display = 'block'; return false;
-        }
-        err.style.display = 'none';
-      }
-      if (step === 3) {
-        const h = parseFloat(answers.height);
-        const err = document.getElementById('height-error');
-        if (!answers.height || isNaN(h) || h < 130 || h > 250) {
-          err.style.display = 'block'; return false;
-        }
-        err.style.display = 'none';
-      }
-      if (step === 4) {
-        if (!answers.days) { alert('Por favor, selecione a frequência de treino.'); return false; }
-      }
-      return true;
-    }
-    /* ── Next step ── */
-    function nextStep(from) {
-      if (!validateStep(from)) return;
-      if (from < totalSteps) {
-        showStep(from + 1);
+      document.getElementById('step' + n).classList.add('active');
+      // Progress bar
+      var pw = document.getElementById('progressWrap');
+      if (n >= 1 && n <= 7) {
+        pw.style.display = 'block';
+        var pct = Math.round((n / totalSteps) * 100);
+        document.getElementById('progressFill').style.width = pct + '%';
+        document.getElementById('progressLabel').textContent = 'Pergunta ' + n + ' de ' + totalSteps;
+        document.getElementById('progressPct').textContent = pct + '%';
       } else {
-        showResult();
+        pw.style.display = 'none';
+      }
+      // Security animation
+      if (n === 8) runSecurity();
+      // Result
+      if (n === 9) showResult();
+    }
+    /* ========== SINGLE SELECT ========== */
+    document.querySelectorAll('.option-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var q = this.dataset.q;
+        var v = this.dataset.v;
+        answers[q] = v;
+        // visual
+        this.parentElement.querySelectorAll('.option-btn').forEach(function (b) { b.classList.remove('selected'); });
+        this.classList.add('selected');
+        // enable next
+        var step = currentStep;
+        var nb = document.getElementById('next' + step);
+        if (nb) nb.disabled = false;
+      });
+    });
+    /* ========== MULTI SELECT ========== */
+    document.querySelectorAll('.check-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var q = this.dataset.q;
+        var v = this.dataset.v;
+        var arr = answers[q];
+        if (q === 'restricoes' && v === 'nenhuma') {
+          if (arr.indexOf('nenhuma') >= 0) {
+            answers[q] = [];
+          } else {
+            answers[q] = ['nenhuma'];
+          }
+        } else {
+          arr = arr.filter(function (x) { return x !== 'nenhuma'; });
+          var idx = arr.indexOf(v);
+          if (idx >= 0) arr.splice(idx, 1); else arr.push(v);
+          answers[q] = arr;
+        }
+        // visual update all in group
+        this.parentElement.querySelectorAll('.check-btn').forEach(function (b) {
+          var bv = b.dataset.v;
+          if (answers[q].indexOf(bv) >= 0) b.classList.add('checked');
+          else b.classList.remove('checked');
+        });
+        var nb = document.getElementById('next' + currentStep);
+        if (nb) nb.disabled = answers[q].length === 0;
+      });
+    });
+    /* ========== UNIT TOGGLE ========== */
+    function setUnit(type, unit) {
+      if (type === 'altura') {
+        answers.alturaUnidade = unit;
+        document.getElementById('unitCm').classList.toggle('active', unit === 'cm');
+        document.getElementById('unitFt').classList.toggle('active', unit === 'ft');
+      } else {
+        answers.pesoUnidade = unit;
+        document.getElementById('unitKg').classList.toggle('active', unit === 'kg');
+        document.getElementById('unitLb').classList.toggle('active', unit === 'lb');
       }
     }
-    /* ── Prev step ── */
-    function prevStep(from) {
-      if (from > 1) showStep(from - 1);
+    function validateNumStep(s) {
+      var id = s === 4 ? 'alturaInput' : 'pesoInput';
+      var val = Number(document.getElementById(id).value);
+      document.getElementById('next' + s).disabled = !(val > 0);
     }
-    /* ── Calculate calories (Mifflin-St Jeor) ── */
-    function calculateCalories() {
-      const weight = parseFloat(answers.weight);
-      const height = parseFloat(answers.height);
-      // Assume male, age 25 for estimation
-      const bmr = 10 * weight + 6.25 * height - 5 * 25 + 5;
-      const activityMap = {
-        '1-2': 1.375,
-        '3-4': 1.55,
-        '5-6': 1.725,
-        '7': 1.9,
-      };
-      const tdee = Math.round(bmr * (activityMap[answers.days] || 1.55));
-      const goalAdjust = { bulk: 300, cut: -400, maintain: 0 };
-      const targetCal = tdee + (goalAdjust[answers.goal] || 0);
-      const protein = Math.round(weight * 2.2);
-      const fat     = Math.round((targetCal * 0.25) / 9);
-      const carb    = Math.round((targetCal - protein * 4 - fat * 9) / 4);
-      return { calories: targetCal, protein, carb, fat };
+    function validateMeta() {
+      document.getElementById('next6').disabled = document.getElementById('metaInput').value.trim().length === 0;
     }
-    /* ── Show Result ── */
+    /* ========== SECURITY SCREEN ========== */
+    function runSecurity() {
+      var items = [document.getElementById('sec1'), document.getElementById('sec2'), document.getElementById('sec3')];
+      items.forEach(function (el) { el.classList.remove('show'); });
+      setTimeout(function () { items[0].classList.add('show'); }, 600);
+      setTimeout(function () { items[1].classList.add('show'); }, 1200);
+      setTimeout(function () { items[2].classList.add('show'); }, 1800);
+      setTimeout(function () { goTo(9); }, 2800);
+    }
+    /* ========== CALCULATE ========== */
+    function calcResults() {
+      var pesoKg = answers.pesoUnidade === 'lb' ? answers.peso * 0.453592 : answers.peso;
+      var baseCal = 2400;
+      if (answers.objetivo === 'perder') baseCal = 2000;
+      else if (answers.objetivo === 'ganhar') baseCal = 2800;
+      if (answers.velocidade === 'rapido') baseCal = Math.round(baseCal * (answers.objetivo === 'perder' ? 0.85 : 1.15));
+      else if (answers.velocidade === 'devagar') baseCal = Math.round(baseCal * (answers.objetivo === 'perder' ? 1.05 : 0.92));
+      var wf = pesoKg / 75;
+      baseCal = Math.round(baseCal * (0.7 + 0.3 * wf));
+      var proteina = Math.round(pesoKg * 2);
+      var gordura = Math.round((baseCal * 0.25) / 9);
+      var carb = Math.round((baseCal - proteina * 4 - gordura * 9) / 4);
+      return { calorias: baseCal, proteina: proteina, carb: carb, gordura: gordura };
+    }
+    /* ========== ANIMATED COUNTER ========== */
+    function animateValue(el, target, suffix) {
+      var start = 0;
+      var duration = 1200;
+      var startTime = performance.now();
+      function tick(now) {
+        var p = Math.min((now - startTime) / duration, 1);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(eased * target) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+    /* ========== CHART ========== */
+    function drawChart() {
+      var canvas = document.getElementById('chartCanvas');
+      var ctx = canvas.getContext('2d');
+      var dpr = window.devicePixelRatio || 1;
+      var w = 300, h = 170;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      ctx.scale(dpr, dpr);
+      var pts = [0, 8, 15, 25, 32, 42, 50, 58, 68, 75, 85, 92, 100];
+      var px = 36, py = 16, cw = w - px * 2, ch = h - py * 2;
+      var prog = 0;
+      function frame() {
+        prog = Math.min(prog + 0.025, 1);
+        ctx.clearRect(0, 0, w, h);
+        ctx.strokeStyle = '#252d38';
+        ctx.lineWidth = 0.5;
+        for (var i = 0; i <= 4; i++) {
+          var gy = py + (ch / 4) * i;
+          ctx.beginPath(); ctx.moveTo(px, gy); ctx.lineTo(w - px, gy); ctx.stroke();
+        }
+        ctx.fillStyle = '#7a8494';
+        ctx.font = '10px Inter';
+        ctx.textAlign = 'center';
+        ['S1', 'S4', 'S8', 'S12'].forEach(function (l, i) {
+          ctx.fillText(l, px + (cw / 3) * i, h - 2);
+        });
+        var dp = Math.ceil(pts.length * prog);
+        ctx.beginPath();
+        ctx.strokeStyle = '#34d67b';
+        ctx.lineWidth = 3;
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+        for (var j = 0; j < dp; j++) {
+          var x = px + (cw / (pts.length - 1)) * j;
+          var y = py + ch - (pts[j] / 100) * ch;
+          if (j === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+        var grad = ctx.createLinearGradient(0, py, 0, py + ch);
+        grad.addColorStop(0, 'rgba(52,214,123,0.18)');
+        grad.addColorStop(1, 'rgba(52,214,123,0)');
+        ctx.lineTo(px + (cw / (pts.length - 1)) * (dp - 1), py + ch);
+        ctx.lineTo(px, py + ch);
+        ctx.fillStyle = grad;
+        ctx.fill();
+        if (dp > 0) {
+          var li = dp - 1;
+          var lx = px + (cw / (pts.length - 1)) * li;
+          var ly = py + ch - (pts[li] / 100) * ch;
+          ctx.beginPath(); ctx.arc(lx, ly, 5, 0, Math.PI * 2);
+          ctx.fillStyle = '#34d67b'; ctx.fill();
+          ctx.beginPath(); ctx.arc(lx, ly, 8, 0, Math.PI * 2);
+          ctx.strokeStyle = 'rgba(52,214,123,0.3)'; ctx.lineWidth = 2; ctx.stroke();
+        }
+        if (prog < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+    /* ========== SHOW RESULT ========== */
     function showResult() {
-      const { calories, protein, carb, fat } = calculateCalories();
-      const goalConfig = {
-        bulk: {
-          label: '💪 Ganho de Massa',
-          bg: 'hsl(185,100%,50%,0.12)',
-          color: 'var(--neon-cyan)',
-          border: 'hsl(185,100%,50%,0.3)',
-          msg: `Com ${calories} kcal/dia e superávit calórico controlado, seu corpo terá combustível para construir músculo. Foque em treinos progressivos e sono de qualidade. O app vai ajustar seu plano semanalmente! 💪`,
-        },
-        cut: {
-          label: '🔥 Queima de Gordura',
-          bg: 'hsl(0,80%,50%,0.1)',
-          color: 'hsl(0,80%,60%)',
-          border: 'hsl(0,80%,50%,0.3)',
-          msg: `Com ${calories} kcal/dia em déficit controlado, você perderá gordura preservando a massa muscular. A chave é consistência — o app monitora cada semana para garantir seu progresso! 🔥`,
-        },
-        maintain: {
-          label: '⚖️ Manutenção',
-          bg: 'hsl(38,100%,55%,0.1)',
-          color: 'var(--neon-orange)',
-          border: 'hsl(38,100%,55%,0.3)',
-          msg: `Com ${calories} kcal/dia em equilíbrio, você mantém o peso enquanto melhora a composição corporal. Ideal para consolidar resultados e ganhar qualidade muscular! ⚖️`,
-        },
-      };
-      const cfg = goalConfig[answers.goal];
-      document.getElementById('result-badge').style.cssText = `background:${cfg.bg}; border:1px solid ${cfg.border}; color:${cfg.color};`;
-      document.getElementById('result-badge').textContent = cfg.label;
-      document.getElementById('result-calories').textContent = calories.toLocaleString('pt-BR');
-      document.getElementById('macro-protein').textContent = protein + 'g';
-      document.getElementById('macro-carb').textContent = carb + 'g';
-      document.getElementById('macro-fat').textContent = fat + 'g';
-      document.getElementById('result-message').textContent = cfg.msg;
-      document.getElementById('quiz-steps').style.display = 'none';
-      document.getElementById('progress-fill').style.width = '100%';
-      document.getElementById('progress-text').textContent = '✅ Concluído!';
-      document.getElementById('progress-pct').textContent = '100%';
-      document.getElementById('result').classList.add('active');
+      var r = calcResults();
+      animateValue(document.getElementById('resCal'), r.calorias, ' kcal');
+      animateValue(document.getElementById('resProt'), r.proteina, 'g');
+      animateValue(document.getElementById('resCarb'), r.carb, 'g');
+      animateValue(document.getElementById('resGord'), r.gordura, 'g');
+      drawChart();
     }
-    /* ── Restart ── */
-    function restartQuiz() {
-      answers.goal = null; answers.weight = null; answers.height = null; answers.days = null;
-      document.getElementById('weight-input').value = '';
-      document.getElementById('height-input').value = '';
-      document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
-      showStep(1);
-    }
-    /* ── Scroll reveal ── */
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    /* ========== LOGO LOADING ========== */
+    // Use inline SVG placeholder since we can't reference external logo in standalone HTML
+    (function () {
+      var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">' +
+        '<circle cx="100" cy="100" r="90" stroke="#34d67b" stroke-width="2"/>' +
+        '<text x="100" y="90" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="22" font-weight="700" fill="#f0f0f0">COREX</text>' +
+        '<text x="100" y="118" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="22" font-weight="700" fill="#34d67b">FIT AI</text>' +
+        '<line x1="60" y1="96" x2="140" y2="96" stroke="#252d38" stroke-width="1"/>' +
+        '</svg>';
+      var blob = new Blob([svg], { type: 'image/svg+xml' });
+      var url = URL.createObjectURL(blob);
+      document.getElementById('logoImg').src = url;
+      document.getElementById('logoResult').src = url;
+    })();
   </script>
 </body>
 </html>
-
-
